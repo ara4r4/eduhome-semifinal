@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic PowerPoint Presentation</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../officegen-0.4.3/index.js"></script> <!-- Update this with the correct path -->
+</head>
+<body>
+    <button id="downloadBtn">Download PPT</button>
+
+    <script>
+        $(document).ready(function () {
+            // Download button event
+            document.getElementById('downloadBtn').addEventListener('click', function () {
+                downloadHelloPptx();
+            });
+
+            function downloadHelloPptx() {
+                // Initialize PowerPoint document
+                var pptx = officegen('pptx');
+
+                // Create a slide with the text "Hello"
+                var slide = pptx.makeNewSlide();
+                slide.addText('Hello', { x: 'c', y: 'c', font_size: 18 });
+
+                // Generate the PowerPoint document
+                var out = pptx.generate();
+                
+                // Convert to Blob and download
+                var blob = new Blob([out], { type: 'application/octet-stream' });
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'HelloPresentation.pptx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+</body>
+</html>

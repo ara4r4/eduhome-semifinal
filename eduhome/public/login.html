@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="./assets/css/account-generation.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        .submit:hover{
+            cursor: pointer;
+            transform: scale(1.05);
+            transition: .5s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form onsubmit="handleLogin(event)">
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" placeholder="Email or Username" name="usernameOrEmail" required>
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" name="password" required>
+
+    <div id="error-message" class="error-message" style="color: #cc0000;"></div>
+        <button type="submit">Log In</button>
+       
+    </form>
+   
+   
+    <script>
+        function getRoleByUsername(input) {
+    if (!input) return alert("NO INPUT PROVIDED");
+
+    const response = fetch('/get-role-by-username-or-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secret: ">#jc=Wer6WkmN9vb<Ue1(363($Griz", input: input })
+    });
+
+    return response
+        .then(res => res.json())
+        .then(data => data.role || null)
+        .catch(error => {
+            console.error('Error:', error);
+            return null;
+        });
+}
+        async function getRole(cookie){
+    if(!cookie) return alert("NO COOKIE PROVIDED");
+    
+    const response = await fetch('/get-role', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secret: ">#jc=Wer6WkmN9vb<Ue1(363($Griz", cookie: cookie })
+    });
+    
+    const data = await response.json();
+    const username = data.role;
+    
+    return username || null;
+}
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+     
+        document.addEventListener('DOMContentLoaded', async function () {
+            const cookie = getCookie('EDUHOME-COOKIE');
+            if (cookie) {
+                const role = await getRole(cookie);
+               if(role=="teacher"){
+                    window.location.href = "./dashboard/home.html"
+                }
+                else if(role =="admin" || role =="staff"){
+                    window.location.href = "./admin/home.html"
+                }
+                else{
+                    window.location.href = "./notyet.html"
+                }
+                
+            }
+        });
+
+        function showPassword() {
+            var passwordInput = document.getElementById("password");
+            passwordInput.type = "text";
+        }
+
+        function hidePassword() {
+            var passwordInput = document.getElementById("password");
+            passwordInput.type = "password";
+        }
+
+        // Function to display the error message
+        function showError(errorMessage) {
+            var errorContainer = document.getElementById("error-message");
+            errorContainer.innerHTML = errorMessage;
+            errorContainer.style.display = "block";
+        }
+
+        function handleLogin(event) {
+          event.preventDefault()
+           
+    var errorContainer = document.getElementById("error-message");
+    errorContainer.style.display = "none";
+
+    var formData = new FormData(document.querySelector("form"));
+    const usernameOrEmail = formData.get("usernameOrEmail");
+    const password = formData.get("password");
+            
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usernameOrEmail, password })
+    })
+        .then(response => {
+            if(response.status === 200) {
+                getRoleByUsername(usernameOrEmail).then(role => {
+
+
+                 if(role == "teacher" || role =="Teacher"){
+                window.location.href = "dashboard/home.html"
+                 }else if(role =="staff" || role == "Staff" || role =="Admin" || role == "admin"){
+                    window.location.href = "admin/home.html"
+                 }else{
+                    window.location.href = "students/main.html"
+                 }
+            });
+            } else if (response.status === 401) {
+                response.json().then(data => {
+                    showError(data.message);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+        });
+}
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#quiz-container {
+    margin-top: 20px;
+}
+
+#quiz-container .question {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+#quiz-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.question-text {
+    max-width: 500px; /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#submitQuiz {
+    margin-top: 20px;
+}
+
+    </style>
+    <link rel="shortcut icon" href="./assets/images/favicon.svg" type="image/svg+xml">
+    <title>Quiz</title>
+</head>
+<body>
+    <h1>Quiz</h1>
+
+    <div id="quiz-container">
+        <!-- Questions and options will be added here dynamically -->
+    </div>
+
+    <button id="submitQuiz">Submit Quiz</button>
+
+    <script>
+        const secret = `>#jc=Wer6WkmN9vb<Ue1(363($Griz`
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ secret })
+            })
+            .then((response) => response.json())
+            .then((questions) => {
+                const quizContainer = document.getElementById('quiz-container');
+                const submitButton = document.getElementById('submitQuiz');
+                let selectedAnswers = {};
+
+                // Randomly select 50 questions
+                const urlParams = new URLSearchParams(window.location.search);
+                const selectedTopic = urlParams.get('topic');
+                const selectedUnit = urlParams.get('unit');
+                
+                const selectedQuestions1 = questions.filter(question => question.topic === selectedTopic && (selectedUnit === 'all' || question.unit === selectedUnit));
+                const selectedQuestions = selectedQuestions1.sort(() => Math.random() - 0.5).slice(0, 50);
+
+                // Display questions and options
+                selectedQuestions.forEach((question, index) => {
+                    console.log(index)
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('question');
+                    questionElement.innerHTML = `
+                        <p class="question-text">Question ${index + 1}: ${question.question}</p><br>
+                        <label>
+                            <input type="radio" name="q${index}" value="a"> A: ${question.answerA}
+                        </label><br>
+                        <label>
+                            <input type="radio" name="q${index}" value="b"> B: ${question.answerB}
+                        </label><br>
+                        <label>
+                            <input type="radio" name="q${index}" value="c"> C: ${question.answerC}
+                        </label><br>
+                        <label>
+                            <input type="radio" name="q${index}" value="d"> D: ${question.answerD}
+                        </label>
+                    `;
+                    quizContainer.appendChild(questionElement);
+                });
+
+                // Event listener for submit button
+                submitButton.addEventListener('click', function() {
+                    selectedAnswers = {};
+
+                    // Get selected answers
+                    selectedQuestions.forEach((_, index) => {
+                        const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                        if (selectedOption) {
+                            selectedAnswers[index] = selectedOption.value;
+                        }
+                    });
+
+                    // Evaluate the quiz
+                    const totalQuestions = selectedQuestions.length;
+                    let totalCorrect = 0;
+                    let incorrectQuestions = [];
+
+                    selectedQuestions.forEach((question, index) => {
+                        if (selectedAnswers[index] === question.trueAnswer) {
+                            totalCorrect++;
+                        } else {
+                            incorrectQuestions.push(index + 1);
+                        }
+                    });
+
+                    // Display results in a new window
+                    const resultWindow = window.open('', '_blank');
+                    resultWindow.document.write(`
+                        <h1>Quiz Results</h1>
+                        <p>Total Questions: ${totalQuestions}</p>
+                        <p>Correct Answers: ${totalCorrect}</p>
+                        <p>Incorrect Answers: ${totalQuestions - totalCorrect}</p>
+                        <p>Total Marks: ${totalCorrect * 2}</p>
+                        <h2>Mistakes</h2>
+                        <ul>
+                            ${incorrectQuestions.map(index => `<li>Question ${index}</li>`).join('')}
+                        </ul>
+                    `);
+                    
+                });
+            });
+        });
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

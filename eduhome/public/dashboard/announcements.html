@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>EduHome - Questions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="../assets/css/dashboard.css">
+<link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts">
+<style>
+ 
+  #container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        
+          background-color: transparent;
+      }
+/* Container styles */
+.announcements {
+  max-width: 1200px;
+  margin: 0 auto;
+  max-height: 500px; /* Set a fixed height */
+  overflow-y: auto;
+}
+
+/* Announcement styles */
+.announcement {
+  background-color: rgba(21, 30, 47, 1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Adjust width as needed */
+  box-sizing: border-box;
+  min-width: 300px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Title styles */
+.title {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Date styles */
+.date {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Content styles */
+.content {
+  color: white;
+  line-height: 1.5;
+}
+
+/* Sender styles */
+.sender {
+  color: #4caf50;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Scrollbar styles (customize as needed) */
+.announcements::-webkit-scrollbar {
+  width: 8px;
+}
+
+.announcements::-webkit-scrollbar-thumb {
+  background-color: #4caf50;
+  border-radius: 4px;
+}
+
+.announcements::-webkit-scrollbar-track {
+  background-color: rgba(21, 30, 47, 0.8);
+}
+       #questions-table {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: auto; /* Change width to auto */
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  min-width: 300px; /* Set a minimum width if needed */
+}
+th, td {
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  border-color: transparent;
+  text-align: center;
+  max-width: 200px; /* Adjust the value as needed */
+  word-wrap: break-word;
+  white-space: normal;
+}
+#questions-table, #add-question {
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Change width to auto */
+  box-sizing: border-box;
+  min-width: 600px; /* Set a minimum width if needed */
+}
+      label {
+          font-weight: bold;
+      }
+
+      input, select {
+          width: calc(100% - 10px);
+         
+          margin-bottom: 15px;
+          box-sizing: border-box;
+         
+          border-radius: 5px;
+        
+          height: 30px;
+          background-color: #101827;
+        color: white;
+       border-color: transparent;
+         
+      }
+      
+
+      button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+
+      button:hover {
+          background-color: #0056b3;
+      }
+
+      #table-container {
+          overflow-x:scroll;
+          width: 100%;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          border-radius: 10px; /* Adding border-radius */
+          overflow: hidden; /* To hide sharp edges */
+      }
+
+      th, td {
+          border: 1px solid transparent;
+          padding: 8px 16px;
+          border-color: transparent;
+          text-align: center;
+      }
+
+      th:hover, td:hover{
+          cursor: pointer;
+      }
+
+      th {
+          background-color: #1d283c; /* Dark color for the header */
+          color: white;
+      }
+
+      /* Add striped row styles */
+      tbody tr:nth-child(odd) {
+          background-color: transparent;
+      }
+      tbody{
+        color: white;
+      }
+      tbody tr:nth-child(even){
+          background-color: transparent;
+      }
+      select{
+        color: white;
+
+      }
+      .correct{
+        color: lightgreen;
+      }
+      tbody tr:hover {
+  background-color: #1d283c; /* Change to your desired hover color */
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1d283c;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* Add this line */
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.editinput input{
+width: calc(100% - 20px);
+          padding: 10px;
+          margin-bottom: 15px;
+          box-sizing: border-box;
+          border: 1px solid #1d283c;
+          border-radius: 5px;
+          background-color: #101827;
+          color: white;
+}
+label{
+color: white;
+}
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="app-container">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="app-icon">
+       <img src="/public/assets/images/eduhome.png" alt="" style="width: 100px;  display: block;
+       margin-left: auto;
+       margin-right: auto;
+       width: 50%;">
+      </div>
+    </div>
+    <ul class="sidebar-list">
+      <li class="sidebar-list-item ">
+        <a href="./home.html">
+          <ion-icon name="home"></ion-icon>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item">
+        <a href="./questions.html">
+          <ion-icon name="help"></ion-icon>
+          <span>Questions</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item">
+        <a href="./add-question.html">
+          <ion-icon name="create"></ion-icon>
+          <span>Editing Questions</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item">
+        <a href="./quizhub.html">
+          <ion-icon name="git-pull-request"></ion-icon>
+          <span>Quiz Hub</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item">
+        <a href="./pdf.html">
+          <ion-icon name="folder-open"></ion-icon>
+          <span>PDFs</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item">
+        <a href="./unit.html">
+          <ion-icon name="copy"></ion-icon>
+          <span>Units</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item active">
+        <a href="./announcements.html">
+            <ion-icon name="megaphone"></ion-icon>
+          <span>Announcements</span>
+        </a>
+      </li>
+      <li class="sidebar-list-item">
+        <a href="./add-announcement.html">
+            <ion-icon name="add-circle"></ion-icon>
+          <span>Sending Messages</span>
+        </a>
+      </li>
+    </ul>
+    <div class="account-info">
+      <div class="account-info-picture">
+        <img src="../assets/images/user.png" alt="Account">
+      </div>
+      <div class="account-info-name" id="username"></div>
+     
+      <div id="usernam1e" ><ion-icon name="log-out-outline" class="log-out-icon" onclick="logout()"></ion-icon></div>
+      
+      
+    </div>
+  </div>
+  <div class="app-content">
+    <div class="app-content-header">
+      <h1 class="app-content-headerText">Announcements</h1>
+     
+    </div>
+    <div class="app-content-actions">
+     
+      <div class="app-content-actions-wrapper">
+        
+       
+      </div>
+    </div>
+    <div id="container">
+     
+        
+        <div class="announcements" id="announcements">
+          
+        </div>
+    </div>
+  
+
+
+
+
+<!-- partial -->
+
+  <script  src="../assets/js/dashboard.js"></script>
+ 
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+       
+          fetch('/announcements', {
+      method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secret })
+    })
+        .then((response) => response.json())
+        .then(async (orders) => {
+        
+
+            orders.forEach(order => {
+             
+            const announcements = document.getElementById("announcements");
+            const announcement = document.createElement("div")
+            announcement.className = "announcement"
+             //sender h4
+                //content p
+                //date h5
+                const title = document.createElement("h2")
+            title.className = "title"
+            title.textContent = order.title
+            announcement.appendChild(title)
+            const date = document.createElement("h5")
+            date.className = "date"
+            date.textContent = order.date
+            announcement.appendChild(date)
+            const content = document.createElement("p")
+            content.className = "content"
+            content.textContent = order.content
+            announcement.appendChild(content)
+            const sender = document.createElement("h4")
+            sender.className = "sender"
+            sender.textContent = order.sender
+            announcement.appendChild(sender)
+            announcements.appendChild(announcement)
+            });
+
+           
+        });
+
+
+   
+  })
+
+
+
+    </script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

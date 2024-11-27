@@ -1,0 +1,701 @@
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Dashboard - EduHome Teacher</title>
+
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        .true{
+            color: lightgreen
+        }
+    </style>
+    <!-- CSS files -->
+    <link href="../dist/css/tabler.min.css?1684106062" rel="stylesheet"/>
+    <link href="../dist/css/tabler-flags.min.css?1684106062" rel="stylesheet"/>
+    <link href="../dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
+    <link href="../dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
+    <link href="../dist/css/demo.min.css?1684106062" rel="stylesheet"/>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+      	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      body {
+      	font-feature-settings: "cv03", "cv04", "cv11";
+      }
+    </style>
+  </head>
+  <body >
+    <script src="../dist/js/demo-theme.min.js?1684106062"></script>
+    <div class="page">
+      <!-- Navbar -->
+      <header class="navbar navbar-expand-md d-print-none" >
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href=".">
+              <img src="../assets/images/eduhometext.png" width="110" height="32" alt="EduHome" class="navbar-brand-image">
+            </a>
+          </h1>
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="nav-item d-none d-md-flex me-3">
+            </div>
+            <div class="d-none d-md-flex">
+              <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
+		   data-bs-placement="bottom">
+                <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
+              </a>
+              <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
+		   data-bs-placement="bottom">
+                <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+              </a>
+
+            </div>
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                <span class="avatar avatar-sm" style="background-image: url(../assets/images/user.png)"></span>
+                <div class="d-none d-xl-block ps-2">
+                  <div id="username"></div>
+                  <div class="mt-1 small text-muted" id="topic"></div>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                <a onclick="logout()" class="dropdown-item">Log out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <header class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+          <div class="navbar">
+            <div class="container-xl">
+              <ul class="navbar-nav">
+                <li class="nav-item ">
+                  <a class="nav-link" href="./home.html" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Home
+                    </span>
+                  </a>
+                </li>
+           
+                
+              
+                
+                <li class="nav-item dropdown active">
+                  <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-question-mark" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4" /><path d="M12 19l0 .01" /></svg>
+                    </span>
+                    <span class="nav-link-title active">
+                      Questions
+                    </span>
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="./add-question.html">
+                     Creating Questions
+                    </a>
+                    <a class="dropdown-item active" href="./questions.html">
+                      Questions
+                    </a>
+                    <a class="dropdown-item" href="./unit.html">
+                      Units
+                    </a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-activity" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
+                      </span>
+                      <span class="nav-link-title">
+                        Activity
+                      </span>
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="./quizhub.html">
+                       QuizHub
+                      </a>
+                      <a class="dropdown-item" href="./pdf.html">
+                        PDF
+                      </a>
+                    </div>
+                  </li>
+              </ul>
+              <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+              
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                  </span>
+                  <input type="text" value="" class="form-control" placeholder="Search by question title" aria-label="Search by question title" id="searchBar">
+                </div>
+
+            </div>
+              
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                  Overview
+                </div>
+                <h2 class="page-title">
+                  Dashboard
+                </h2>
+              </div>
+              <!-- Page title actions -->
+              <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                  <a href="add-question.html" class="btn btn-primary d-none d-sm-inline-block" >
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                    Create new question
+                  </a>
+                  <a href="unit.html" class="btn btn-secondary d-none d-sm-inline-block" >
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-book" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6l0 13" /><path d="M12 6l0 13" /><path d="M21 6l0 13" /></svg>
+                    View Units
+                  </a>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="row row-deck row-cards">         
+                <div class="col-12">
+                    <div class="row row-cards">
+                      <div class="col-sm-6 col-lg-4">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-primary text-white avatar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-question" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M14.071 17.764a8.989 8.989 0 0 1 -2.071 .236c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.346 0 6.173 1.727 8.482 5.182" /><path d="M19 22v.01" /><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium">
+                                  Total Questions
+                                </div>
+                                <div class="text-muted" id="totalQuestions">
+                               
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-4">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-green text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium">
+                                  Most Used Chapter
+                                </div>
+                                <div class="text-muted" id="mostUsedChapter">
+    
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-4">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-purple text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7h16" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /><path d="M10 12l4 4m0 -4l-4 4" /></svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium">
+                                  Least Used Chapter
+                                </div>
+                                <div class="text-muted" id="leastUsedChapter">
+    
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <div class="col-lg-12">
+                <div class="card">
+                    <div class="table-responsive">
+                      <table
+          class="table table-vcenter card-table">
+                        <thead>
+                          <tr>
+                            <th>Question</th>
+                            <th>Answer A</th>
+                            <th>Answer B</th>
+                            <th>Answer C</th>
+                            <th>Answer D</th>
+                            <th>Correct Answer</th>
+                            <th>Unit</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="ordersTableBody" class="table-tbody">
+                          <tr>
+                          
+                           
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+              
+              
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ms-lg-auto">
+             
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2024
+                    <a href="../" class="link-secondary">EduHome</a>.
+                    All rights reserved.
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+  <div class="modal modal-blur fade" id="modal-team" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="1modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Question</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Question" id="1questionInput">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Answer A</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Answer A" id="1answerA">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Answer B</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Answer B" id="1answerB">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Answer C</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Answer C" id="1answerC">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Answer D</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Answer D" id="1answerD">
+          </div>
+        
+              <div class="mb-3">
+                <label class="form-label">Correct Answer</label>
+                <select class="form-select" id="1correctAnswer">
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                    <option value="d">D</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                <div>
+                  <label class="form-label">Unit</label>
+                  <select class="form-select" id="1unit">
+
+                  </select>
+                 
+                </div>
+              </div>
+           
+           
+            <div class="modal-footer">
+                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </a>
+                <a href="#" class="btn btn-danger"  id="deleteQuestionButton">
+                  Delete Question
+                </a>
+                <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal" id="editQuestionButton">
+                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                Edit Question
+                </a>
+                <p id="1idText"></p>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Libs JS -->
+    <script src="../dist/libs/apexcharts/dist/apexcharts.min.js?1684106062" defer></script>
+    <script src="../dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1684106062" defer></script>
+    <script src="../dist/libs/jsvectormap/dist/maps/world.js?1684106062" defer></script>
+    <script src="../dist/libs/jsvectormap/dist/maps/world-merc.js?1684106062" defer></script>
+    <!-- Tabler Core -->
+    <script src="../dist/js/tabler.min.js?1684106062" defer></script>
+    <script src="../dist/js/demo.min.js?1684106062" defer></script>
+    <script>
+            const searchInput = document.getElementById("searchBar");
+searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase(); // Convert search term to lowercase
+    const tbody = document.getElementById("ordersTableBody");
+    const rows = tbody.querySelectorAll('tr');
+
+    rows.forEach(row => {
+        const firstChild = row.firstElementChild;
+        
+        if (firstChild && firstChild.textContent) {
+            const textContent = firstChild.textContent.toLowerCase();
+            row.style.display = textContent.includes(searchTerm) ? '' : 'none';
+        } else {
+            row.style.display = 'none'; // Handle the case where firstElementChild or textContent is null
+        }
+    });
+});
+
+        function updateQuestion(id) {
+          const question = document.getElementById("1questionInput").value
+          const answerA = document.getElementById("1answerA").value
+          const answerB = document.getElementById("1answerB").value
+          const answerC = document.getElementById("1answerC").value
+          const answerD = document.getElementById("1answerD").value
+          const trueAnswer = document.getElementById("1correctAnswer").value
+          const unit = document.getElementById("1unit").value
+          
+          
+          var updatedData = {
+            question: question,
+            answerA: answerA,
+            answerB: answerB,
+            answerC: answerC,
+            answerD: answerD,
+            trueAnswer: trueAnswer,
+            unit: unit,
+
+          };
+        
+          
+          fetch(`/update-question/${id}`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(updatedData)
+          })
+          .then(response => response.json())
+          .then(result => {
+
+          })
+          .catch(error => {
+            alert("An error occured")
+            console.log(error)
+          });
+        }
+        function deleteQuestion(id){
+          fetch(`/delete-question/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+          
+                if (data.success) {
+                    alert("Question deleted successfully");
+                    window.location.reload(); 
+                } else {
+                    alert("Error deleting order");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+   function loadUnits() {
+    const secret11111 = `>#jc=Wer6WkmN9vb<Ue1(363($Griz`
+    function getCooki1e(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+  const cookie = getCooki1e("EDUHOME-COOKIE");
+  function getTopic(cookie) {
+  if (!cookie) {
+    alert("NO COOKIE PROVIDED");
+    return Promise.reject("NO COOKIE PROVIDED");
+  }
+
+  return fetch('/get-topic', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ secret: secret11111, cookie: cookie })
+  })
+  .then(function(response) {
+      return response.json();
+  })
+  .then(function(data) {
+      const username = data.teachingTopic;
+      return username || null;
+  })
+  .catch(function(error) {
+      // Handle errors here
+      console.error(error);
+      throw error;
+  });
+}
+
+  const topicPromise = getTopic(cookie);
+
+  return topicPromise
+    .then((topic) => {
+      return fetch('/get-units', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secret, topic })
+      });
+    })
+    .then((response) => response.json())
+    .then((units) => {
+      units.forEach(unit => {
+        const fullName = `${unit.name} ${unit.number}`;
+        const selectionBox = document.getElementById("1unit");
+        const option = document.createElement("option");
+        option.value = fullName;
+        option.textContent = fullName;
+        selectionBox.appendChild(option);
+      });
+    });
+}
+
+(async () => {
+  await loadUnits();
+})();
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const secret = '>#jc=Wer6WkmN9vb<Ue1(363($Griz';
+        
+            fetch('/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ secret })
+            })
+            .then((response) => response.json())
+            .then(async (questions11) => {
+                if (questions11 === "Get away") {
+                    console.log("Unauthorized access");
+                    return;
+                }
+        const questions1 = questions11.reverse()
+
+        function getTopic(cookie) {
+            if (!cookie) {
+              alert("NO COOKIE PROVIDED");
+              return Promise.reject("NO COOKIE PROVIDED");
+            }
+          
+            return fetch('/get-topic', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ secret: secret, cookie: cookie })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                const username = data.teachingTopic;
+                return username || null;
+            })
+            .catch(function(error) {
+                // Handle errors here
+                console.error(error);
+                throw error;
+            });
+          }
+          const cookie11 = getCookie("EDUHOME-COOKIE")
+          const topicPromise = getTopic(cookie11);
+
+  return topicPromise
+    .then((topic) => {
+
+    const questions = questions1.filter(question => question.topic == topic)
+
+               
+
+             
+
+
+          
+                questions.forEach(function (order) {
+                    var newRow = document.createElement('tr');
+                   
+                    var questionCell = createTableCell('sort-question', order.question);
+                    var answerACell = createTableCell('sort-answerA', `${order.answerA}`);
+                    var answerBCell = createTableCell('sort-answerD', order.answerB);
+                    var answerCCell = createTableCell('sort-answerC', order.answerC);
+                    var answerDCell = createTableCell('sort-answerD', order.answerD);
+                    if(order.trueAnswer == "a"){
+                        answerACell.className = "true"
+                    }else if(order.trueAnswer == "b"){
+                        answerBCell.className = "true"
+                    }else if(order.trueAnswer == "c"){
+                        answerCCell.className = "true"
+                    }else if(order.trueAnswer == "d"){
+                        answerDCell.className = "true"
+                    }
+                    var unitCell = createTableCell('sort-unit', order.unit)
+                    var trueAnswerCell = createTableCell('sort-correctAnswer', order.trueAnswer)
+                    var actionsCell = document.createElement('td');
+                    actionsCell.className = 'text-end';
+                    
+                    var actionsSpan = document.createElement('span');
+                    actionsSpan.className = 'dropdown';
+        
+                    var actionsButton = document.createElement('button');
+                    actionsButton.className = 'btn align-text-top';
+                    actionsButton.setAttribute('data-bs-toggle', 'modal');
+                    actionsButton.setAttribute('data-bs-target', '#modal-team');
+                    actionsButton.textContent = `Actions (${order.id})`;
+        
+                    actionsButton.addEventListener('click', function() {
+                      function extractNumber(text) {
+                        const match = text.match(/\((\d+)\)/);
+                        return match ? parseInt(match[1]) : null;
+                    }
+                      const selectedId = (extractNumber(actionsButton.textContent))
+                      fetch(`/get-question-info-by-id/${selectedId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ secret: secret })
+                })
+                .then(response => response.json())
+                .then(async datas => {
+                        const data = datas[0]
+                        const modalTitle = document.getElementById('1modal-title');
+                        modalTitle.textContent = `(ID: ${data.id})`;
+                        document.getElementById('1questionInput').value = data.question;
+                        document.getElementById('1answerA').value = data.answerA
+                        document.getElementById('1answerB').value = data.answerB
+                        document.getElementById('1answerC').value = data.answerC
+                        document.getElementById('1answerD').value = data.answerD
+                        
+                        
+                        document.getElementById("1unit").value = data.unit
+                        document.getElementById("1correctAnswer").value = data.trueAnswer
+                        document.getElementById("1idText").textContent = data.id
+                      });
+                    });
+        
+                    actionsSpan.appendChild(actionsButton);
+                    actionsCell.appendChild(actionsSpan);
+        
+
+                    newRow.appendChild(questionCell);
+                    newRow.appendChild(answerACell);
+                    newRow.appendChild(answerBCell);
+                    newRow.appendChild(answerCCell);
+                    newRow.appendChild(answerDCell);
+                    newRow.appendChild(trueAnswerCell)      
+                    newRow.appendChild(unitCell)     
+                    newRow.appendChild(actionsCell) 
+                    ordersTableBody.appendChild(newRow);
+                });
+            })
+            .catch(error => console.error('Error fetching orders:', error));
+        })
+            function createTableCell(className, textContent) {
+                var cell = document.createElement('td');
+                cell.className = className;
+                cell.textContent = textContent;
+                return cell;
+            }
+        });
+
+        const editUserButton = document.getElementById("editQuestionButton");
+        editUserButton.addEventListener("click", () => {
+           
+         
+          const id = document.getElementById("1idText").textContent
+          updateQuestion(id);
+          alert("Successfully updated question.")
+          window.location.reload()
+
+        })
+
+        const deleteUserButton = document.getElementById("deleteQuestionButton");
+        deleteUserButton.addEventListener("click", () => {
+        
+          
+          const id = document.getElementById("1idText").textContent
+    
+          
+              deleteQuestion(id)
+              alert("Successfully deleted question.")
+              window.location.reload()
+             
+
+          
+
+        })
+
+        
+
+
+          </script>
+          <script src="../assets/js/dashboard.js"></script>
+          <script  src="../assets/js/admindashboard.js"></script>
+          <script src="questioncount.js"></script>
+  </body>
+</html>

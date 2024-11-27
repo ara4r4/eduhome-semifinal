@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <title>Quiz Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #ecf0f1;
+        }
+
+        .quiz-hub-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .topic-box {
+            width: 100%;
+            margin: 10px;
+        }
+
+        .topic-box-inner {
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+        }
+
+        .topic-box-inner:hover {
+            transform: scale(1.05);
+        }
+
+        .topic-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .topic-button {
+            min-width: 40px; /* Set a minimum width */
+            padding: 5px 10px; /* Adjust padding for better spacing */
+            margin: 5px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .topic-button:hover {
+            background-color: #2980b9;
+        }
+
+        @media (min-width: 600px) {
+            .topic-box {
+                width: 45%;
+            }
+        }
+        #undoButton {
+        
+           margin-left: 2px;
+            border: none;
+          
+         
+            cursor: pointer;
+            
+          
+        }
+        #undoButton:hover{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            /* Example: Adjust styles for smaller screens */
+            #undoButton {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <header>
+        <h2 style="text-align: center;">Quiz Hub</h2>
+        <!-- Undo button with Font Awesome icon -->
+        <h4 id="undoButton"><ion-icon name="arrow-undo"></ion-icon> Go Back</h4>
+    </header>
+</head>
+<body>
+   
+    
+    <div class="quiz-hub-container" id="quizHubContainer">
+        <!-- Dynamically generated topic boxes will go here -->
+    </div>
+    <script>
+        function changeDirectionToRTL() {
+    document.body.style.direction = 'rtl';
+  }
+        window.onload = function () {
+            fetch('/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ secret: ">#jc=Wer6WkmN9vb<Ue1(363($Griz" }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const quizHubContainer = document.getElementById('quizHubContainer');
+
+                // Extract unique topics
+                const topics = [...new Set(data.map(question => question.topic))];
+
+                topics.forEach((topic) => {
+                    const topicBox = document.createElement('div');
+                    topicBox.classList.add('topic-box');
+
+                    const topicBoxInner = document.createElement('div');
+                    topicBoxInner.classList.add('topic-box-inner');
+                    topicBoxInner.textContent = topic;
+
+                    const buttonsContainer = document.createElement('div');
+                    buttonsContainer.classList.add('topic-buttons');
+
+                    // Add a button for "All" units
+                    const allButton = document.createElement('button');
+                    allButton.classList.add('topic-button');
+                    allButton.textContent = 'All';
+                    allButton.addEventListener('click', () => handleButtonClick(topic, 'All'));
+                    buttonsContainer.appendChild(allButton);
+
+                    // Extract unique units for the current topic
+                    const units = [...new Set(data.filter(q => q.topic === topic).map(q => q.unit))];
+
+                    units.forEach((unit) => {
+                        const button = document.createElement('button');
+                        button.classList.add('topic-button');
+                        button.textContent = `Unit ${unit}`;
+                        button.addEventListener('click', () => handleButtonClick(topic, unit));
+                        buttonsContainer.appendChild(button);
+                    });
+
+                    topicBoxInner.appendChild(buttonsContainer);
+                    topicBox.appendChild(topicBoxInner);
+                    quizHubContainer.appendChild(topicBox);
+                });
+            })
+            .catch(error => console.error('Error fetching questions:', error));
+
+            function handleButtonClick(topic, unit) {
+              
+                  
+                    const type = "q";
+                        const secret = ">#jc=Wer6WkmN9vb<Ue1(363($Griz";
+                        
+                        fetch('/add-track', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ secret, type, topic, unit })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const quizUrl = `/students/quiz.html?topic=${encodeURIComponent(topic)}&unit=${encodeURIComponent(unit)}`;
+                                window.location.href = quizUrl;
+                            } else {
+                                alert("Error saving");
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                
+            }
+        }
+    </script>
+</body>
+<script>
+    document.getElementById("undoButton").addEventListener("click", () => {
+        window.location.href = "main.html"
+    })
+</script>
+<script src="../assets/js/studentdashboard.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</html>

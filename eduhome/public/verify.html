@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .icon-container {
+            text-align: center;
+        }
+
+        .icon{
+            font-size: 200px;
+            color: #DC3545;
+        }
+
+        .textBox{
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            background-color: hsl(0, 0%, 100%);;
+            color: #18273F;
+            padding: 10px 20px;
+            margin-top: auto; /* This pushes the footer to the bottom */
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="icon-container">
+            <ion-icon name="alert-circle-outline" class="icon"></ion-icon>
+        </div>
+        <div class="textBox">
+            <h1 style="color: #DC3545;">Verify your account first!</h1>
+            <h4>Before continuing, you have to verify your account</h4>
+            <h4>An email has been sent to <span id="fullemail" style="color: green;"></span></h4>
+            <h5 style="color: grey;">Wrong email address? Make a new account</h5>
+        </div>
+    </div>
+
+    <footer>
+        <p>All rights reserved for EduHome</p>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    const secret = `>#jc=Wer6WkmN9vb<Ue1(363($Griz`
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      async function verified(cookie){
+          if(!cookie) return alert("NO COOKIE PROVIDED")
+      
+          const response = await fetch("/verified-or-not", {
+              method: 'POST',
+              headers: {
+                  'Content-Type': "application/json"
+              },
+              body: JSON.stringify({ secret: secret, cookie, cookie})
+          });
+      
+          const data = await response.json()
+          const trueorvalse = data.trueorfalse
+       
+          if(trueorvalse == true){
+            
+             window.location.href = "../login.html"
+          }
+      
+          
+      }
+      async function showemail(cookie){
+        if(!cookie) return alert("NO COOKIE PROVIDED");
+    
+    const response = await fetch('/get-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secret: secret, cookie: cookie })
+    });
+    
+    const data = await response.json();
+    const username = data.email;
+    
+   document.getElementById("fullemail").textContent = username
+      
+          
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+          const cookie = getCookie('EDUHOME-COOKIE');
+         
+          if (cookie) {
+              verified(cookie)
+              showemail(cookie)
+          }else{
+              window.location.href = "../index.html"
+                  }
+      });
+      
+      
+      
+      </script>
+</body>
+</html>
